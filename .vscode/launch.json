@@ -1,0 +1,24 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug rustlinqdemo1 (CodeLLDB)",
+      "type": "lldb",
+      "request": "launch",
+      "cargo": {
+        "args": [
+          "build",
+          "--bin",
+          "rustlinqdemo1"
+        ],
+        "filter": {
+          "name": "rustlinqdemo1",
+          "kind": "bin"
+        }
+      },
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "env": {}
+    }
+  ]
+}
