@@ -1,7 +1,4 @@
-#[path = "../src/main.rs"]
-mod main_rs;
-
-use main_rs::{All, Any, FirstOrDefault, LastOrDefault, SkipTakeOwned, TakeOwned, TakeSlice};
+use rustlinqdemo1::sequence_extensions::{All, Any, FirstOrDefault, LastOrDefault, SkipTakeOwned, TakeOwned, TakeSlice};
 
 #[test]
 fn all_returns_false_when_one_item_does_not_match() {
