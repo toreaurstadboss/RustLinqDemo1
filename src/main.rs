@@ -7,6 +7,9 @@ fn main() {
 
     let b = v.last_or_default();
     println!("The last item of vector v is: {}", b);
+
+    let c: &[i32] = v.take_n(3);
+    println!("The first 3 items of vector v are: {:?}", c);
 }
 
 
@@ -48,3 +51,22 @@ where
     }
 }
 
+
+/// Takes n items from slice
+pub trait TakeSlice {
+    type Item;
+
+    /// Takes n items from slice. If less than n items are available, the length of items of the slice are returned (all items)
+    fn take_n(&self, n : usize) -> &[Self::Item];
+    
+}
+
+impl<T> TakeSlice for [T] {
+    type Item = T;
+
+    fn take_n(&self, n: usize) -> &[T]{
+        &self[..n.min(self.len())]
+    }
+
+}
+    
