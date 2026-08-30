@@ -12,18 +12,68 @@ fn main() {
     let b = v.last_or_default();
     println!("The last item of vector v is: {}", b);
 
-    let c: &[i32] = v.take_n(3);
-    println!("The first 3 items of vector v are: {:?}", c);
+    let c = v.any(|x| *x > 119);
+    println!("There is a number larger than number 119 in the vector v: {:?}", c);
 
-    let d = v.clone().take_owned(4);
-    println!("The first 4 items of vector v are {:?}", d);
+    let d = v.all(|x| *x % 2 == 0);
+    println!("The numbers in vector v are all even numbers: {:?}", d);
 
-    let e = v.skip_take_owned(2, 2);
-    println!("The 2 items from the 3rd position of vector v are {:?}", e);
+    let e: &[i32] = v.take_n(3);
+    println!("The first 3 items of vector v are: {:?}", e);
+
+    println!("Cloning the vector for next calls that takes ownership of (parts of) it");
+
+    let f = v.clone().skip_take_owned(2, 2);
+    println!("The 2 items from the 3rd position of vector v are {:?}", f);
+
+    let g = v.clone().take_owned(4);
+    println!("The first 4 items of vector v are {:?}", g);
+
+
+
 }
 
+pub trait Any {
+    type Item;
 
-/// Gets the first item or the default value.
+    /// Returns true when any item matches the predicate.
+    fn any<F>(&self, predicate: F) -> bool
+    where
+        F: FnMut(&Self::Item) -> bool;
+}
+
+impl<T> Any for [T] {
+    type Item = T;
+
+    fn any<F>(&self, predicate: F) -> bool
+    where
+        F: FnMut(&Self::Item) -> bool,
+    {
+        self.iter().any(predicate)
+    }
+}
+
+pub trait All {
+    type Item;
+
+    /// Returns true when all items match the predicate.
+    fn all<F>(&self, predicate: F) -> bool
+    where
+        F: FnMut(&Self::Item) -> bool;
+}
+
+impl<T> All for [T] {
+    type Item = T;
+
+    fn all<F>(&self, predicate: F) -> bool
+    where
+        F: FnMut(&Self::Item) -> bool,
+    {
+        self.iter().all(predicate)
+    }
+}
+
+/// Returns the first item or the default value.
 pub trait FirstOrDefault {
     type Item;
 
@@ -42,7 +92,7 @@ where
     }
 }
 
-/// Gets the last item or the default value.
+/// Returns the last item or the default value.
 pub trait LastOrDefault {
     type Item;
 
@@ -62,11 +112,11 @@ where
 }
 
 
-/// Takes n items from slice
+/// Returns a borrowed prefix of a slice.
 pub trait TakeSlice {
     type Item;
 
-    /// Borrows and takes n items from slice. If less than n is larger than the number of items in the slice, the entire slice is returned 
+    /// Returns up to n items from the start of the slice.
     fn take_n(&self, n : usize) -> &[Self::Item];
     
 }
@@ -81,9 +131,11 @@ impl<T> TakeSlice for [T] {
 }
     
 
-// Takes n items from the vector
+/// Returns an owned prefix of a vector.
 pub trait TakeOwned {
     type Item;
+
+    /// Returns up to n items from the start of the vector.
     fn take_owned(self, n: usize) -> Vec<Self::Item>;
 
 }
@@ -102,6 +154,8 @@ impl<T> TakeOwned for Vec<T> {
 
 pub trait SkipTakeOwned {
     type Item;
+
+    /// Returns up to n items after skipping m items.
     fn skip_take_owned(self, m: usize, n:usize) -> Vec<Self::Item>;
 }
 
