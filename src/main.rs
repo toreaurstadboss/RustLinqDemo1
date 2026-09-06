@@ -12,7 +12,7 @@ fn main() {
     let w = vec![-3, 7, 11, 12, 18, 23, 54, 63, 118];
 
 
-    for (key, group) in &w.clone().into_iter().chunk_by(|x| x % 2 == 0) {
+    for (key, group) in fun_name(w) {
          println!("Key: {}, Group: {:?}", key, group.collect::<Vec<_>>());
     }
 
@@ -39,4 +39,8 @@ fn main() {
 
     let g = v.clone().take_owned(4);
     println!("The first 4 items of vector v are {:?}", g);
+}
+
+fn fun_name(w: Vec<i32>) -> &itertools::ChunkBy<bool, std::vec::IntoIter<i32>, impl FnMut(&i32) -> bool> {
+    &w.clone().into_iter().chunk_by(|x| x % 2 == 0)
 }
