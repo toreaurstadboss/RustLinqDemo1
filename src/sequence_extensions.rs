@@ -1,3 +1,5 @@
+use itertools::Itertools;
+
 pub trait Any {
     type Item;
 
@@ -122,5 +124,25 @@ impl<T> SkipTakeOwned for Vec<T> {
     fn skip_take_owned(self, m: usize, n: usize) -> Vec<Self::Item> {
         let len = self.len();
         self.into_iter().skip(m.min(len)).take(n.min(len)).collect()
+    }
+}
+
+
+pub trait GroupBy {
+    type Item;
+
+    fn group_by<F>(self, key_selector: F) -> itertools::ChunkBy<bool, std::vec::IntoIter<Self::Item>, F>
+    where
+        F: FnMut(&Self::Item) -> bool;
+}
+
+impl<T> GroupBy for Vec<T> {
+    type Item = T; 
+
+    fn group_by<F>(self, key_selector: F) -> itertools::ChunkBy<bool, std::vec::IntoIter<T>, F>
+    where
+        F: FnMut(&T) -> bool,
+    {
+        self.into_iter().chunk_by(key_selector)
     }
 }

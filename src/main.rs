@@ -1,4 +1,4 @@
-use rustlinqdemo1::sequence_extensions::{All, Any, FirstOrDefault, LastOrDefault, SkipTakeOwned, TakeOwned, TakeSlice};
+use rustlinqdemo1::sequence_extensions::{All, Any, FirstOrDefault, LastOrDefault, SkipTakeOwned, TakeOwned, TakeSlice, GroupBy};
 
 use itertools::Itertools;
 
@@ -12,7 +12,7 @@ fn main() {
     let w = vec![-3, 7, 11, 12, 18, 23, 54, 63, 118];
 
 
-    for (key, group) in fun_name(w) {
+    for (key, group) in &w.group_by(|x| x % 2 == 0) {
          println!("Key: {}, Group: {:?}", key, group.collect::<Vec<_>>());
     }
 
@@ -41,6 +41,3 @@ fn main() {
     println!("The first 4 items of vector v are {:?}", g);
 }
 
-fn fun_name(w: Vec<i32>) -> &itertools::ChunkBy<bool, std::vec::IntoIter<i32>, impl FnMut(&i32) -> bool> {
-    &w.clone().into_iter().chunk_by(|x| x % 2 == 0)
-}
