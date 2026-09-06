@@ -1,6 +1,5 @@
 use rustlinqdemo1::sequence_extensions::{All, Any, FirstOrDefault, LastOrDefault, SkipTakeOwned, TakeOwned, TakeSlice, GroupBy};
 
-use itertools::Itertools;
 
 fn main() {
     //println!("Hello, world!");
@@ -11,9 +10,20 @@ fn main() {
 
     let w = vec![-3, 7, 11, 12, 18, 23, 54, 63, 118];
 
+    let users = vec![ User { id: 1, name: "Alice".to_string()}, User { id : 2, name: "Bob".to_string() }, User { id: 3, name: "Bob".to_string()}];
+
+    for (key, group) in users.clone().group_by(|u|u.name.clone()){
+        println!("Name: {}", key);
+        println!("Users: {:#?}", group);
+       // println!("User ids: {:?}", group.iter().map(|u| u.id).collect::<Vec<_>>());
+
+
+       println!("User ids: {:?}", group.into_iter().map(|u|u.id).collect::<Vec<_>>());
+    }
+
 
     for (key, group) in &w.group_by(|x| x % 2 == 0) {
-         println!("Key: {}, Group: {:?}", key, group.collect::<Vec<_>>());
+         println!("Vector 'w' Key: {}, Group: {:?}", key, group.into_iter().collect::<Vec<_>>());
     }
 
 
@@ -41,3 +51,9 @@ fn main() {
     println!("The first 4 items of vector v are {:?}", g);
 }
 
+
+#[derive(Debug, Clone)]
+struct User {
+    id: i32,
+    name: String
+}

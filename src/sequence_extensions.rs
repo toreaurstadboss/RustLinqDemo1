@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use itertools::Itertools;
 
 pub trait Any {
@@ -131,18 +133,20 @@ impl<T> SkipTakeOwned for Vec<T> {
 pub trait GroupBy {
     type Item;
 
-    fn group_by<F>(self, key_selector: F) -> itertools::ChunkBy<bool, std::vec::IntoIter<Self::Item>, F>
+    fn group_by<F, K>(self, key_selector: F) -> HashMap<K, Vec<Self::Item>>
     where
-        F: FnMut(&Self::Item) -> bool;
+        F: FnMut(&Self::Item) -> K,
+        K: std::hash::Hash + Eq;
 }
 
 impl<T> GroupBy for Vec<T> {
     type Item = T; 
 
-    fn group_by<F>(self, key_selector: F) -> itertools::ChunkBy<bool, std::vec::IntoIter<T>, F>
+    fn group_by<F, K>(self, key_selector: F) -> std::collections::HashMap<K, Vec<T>>
     where
-        F: FnMut(&T) -> bool,
+        F: FnMut(&T) -> K,
+        K : std::hash::Hash + Eq
     {
-        self.into_iter().chunk_by(key_selector)
+        self.into_iter().into_group_map_by(key_selector)
     }
 }
