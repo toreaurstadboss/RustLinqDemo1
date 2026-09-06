@@ -1,11 +1,20 @@
 use rustlinqdemo1::sequence_extensions::{All, Any, FirstOrDefault, LastOrDefault, SkipTakeOwned, TakeOwned, TakeSlice};
 
+use itertools::Itertools;
+
 fn main() {
     //println!("Hello, world!");
 
     let v = vec![- 30, 10, 28, 32, 120];
 
     println!("Input vector: {:?}", v);
+
+    let w = vec![-3, 7, 11, 12, 18, 23, 54, 63, 118];
+
+
+    for (key, group) in &w.clone().into_iter().chunk_by(|x| x % 2 == 0) {
+         println!("Key: {}, Group: {:?}", key, group.collect::<Vec<_>>());
+    }
 
 
     let a = v.first_or_default();
