@@ -122,7 +122,6 @@ mod tests {
         for i in -5..4 {
             println!("Number using default for range in Rust : {}", i);
         }
-
     }
 
 }
