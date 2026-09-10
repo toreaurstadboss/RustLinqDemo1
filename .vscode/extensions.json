@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "hbenl.vscode-test-explorer",
+    "rust-lang.rust-analyzer",
+    "swellaby.vscode-rust-test-adapter",
+    "vadimcn.vscode-lldb"
+  ]
+}
