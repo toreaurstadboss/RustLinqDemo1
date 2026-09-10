@@ -117,6 +117,12 @@ mod tests {
         let expected_nums = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4];
 
         assert_eq!(range, expected_nums);
+
+        // Of course we can just use the default range operator (exclusive range) in Rust
+        for i in -5..4 {
+            println!("Number using default for range in Rust : {}", i);
+        }
+
     }
 
 }
