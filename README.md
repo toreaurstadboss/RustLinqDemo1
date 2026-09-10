@@ -29,6 +29,14 @@ From the project root:
 cargo test
 ```
 
+## Use The Test Explorer
+
+Use the Test Explorer UI extension together with Rust Test Explorer to run and inspect unit tests from the `src/` tree in the sidebar.
+
+Tests under `tests/` remain visible to `cargo test`, but they are not the target of that explorer.
+
+Recommended extensions are listed in [.vscode/extensions.json](.vscode/extensions.json).
+
 ## Debug in VS Code
 
 1. Open this folder in VS Code.

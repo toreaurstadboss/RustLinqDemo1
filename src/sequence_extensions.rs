@@ -46,21 +46,19 @@ impl<T> All for [T] {
 pub trait ElementAtOrDefault {
     type Item;
 
-    fn elementat_or_default(&self, index: &usize) -> Self::Item;
+    fn elementat_or_default(&self, index: usize) -> Self::Item;
 }
 
 impl<T> ElementAtOrDefault for [T]
 where
-    T: Default + Clone,
+    T: Default + Clone
 {
     type Item = T;
 
-    fn elementat_or_default(&self, index: &usize) -> Self::Item {
-        self.get(*index).cloned().unwrap_or_default()
+    fn elementat_or_default(&self, index: usize) -> Self::Item {
+        self.get(index).cloned().unwrap_or_default()
     }
 }
-
-
 
 /// Returns the first item or the default value.
 pub trait FirstOrDefault {

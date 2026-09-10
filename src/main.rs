@@ -1,4 +1,4 @@
-use rustlinqdemo1::sequence_extensions::{All, Any, FirstOrDefault, LastOrDefault, SkipTakeOwned, TakeOwned, TakeSlice, GroupBy};
+use rustlinqdemo1::sequence_extensions::{All, Any, ElementAtOrDefault, FirstOrDefault, GroupBy, LastOrDefault, SkipTakeOwned, TakeOwned, TakeSlice};
 
 
 fn main() {
@@ -9,6 +9,9 @@ fn main() {
     println!("Input vector: {:?}", v);
 
     let w = vec![-3, 7, 11, 12, 18, 23, 54, 63, 118];
+
+   let fourth_number = v.elementat_or_default(8usize);
+   println!("Fourth number of w is: {}", fourth_number);
 
     let users = vec![ User { id: 1, name: "Alice".to_string()}, User { id : 2, name: "Bob".to_string() }, User { id: 3, name: "Bob".to_string()}];
 

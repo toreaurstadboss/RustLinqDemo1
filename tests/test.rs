@@ -1,4 +1,4 @@
-use rustlinqdemo1::sequence_extensions::{All, Any, FirstOrDefault, LastOrDefault, SkipTakeOwned, TakeOwned, TakeSlice};
+use rustlinqdemo1::sequence_extensions::{All, Any, ElementAtOrDefault, FirstOrDefault, LastOrDefault, SkipTakeOwned, TakeOwned, TakeSlice};
 
 #[test]
 fn all_returns_false_when_one_item_does_not_match() {
@@ -12,6 +12,15 @@ fn any_returns_true_when_one_item_matches() {
     let values = vec![1, 3, 5, 8];
 
     assert!(values.any(|value| *value > 7));
+}
+
+#[test]
+fn elementat_or_default_returns_fourth_item(){
+    let values = vec![3, 5, 11, -3, 45];
+    
+    let fourth_number= values.elementat_or_default(3);
+
+    assert_eq!(fourth_number, -3); // 0-index based
 }
 
 #[test]
