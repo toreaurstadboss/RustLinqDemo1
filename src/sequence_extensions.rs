@@ -2,6 +2,26 @@ use std::collections::HashMap;
 
 use itertools::Itertools;
 
+
+pub trait Range {
+
+    fn range(start: i32, count: u32) -> Vec<i32>;
+}
+
+pub struct RangeGenerator;
+
+impl Range for RangeGenerator {
+
+    fn range(start: i32, count: u32) -> Vec<i32>{
+        let mut result = Vec::new();
+
+        for i in start..start + (count as i32) {
+            result.push(i);
+        }
+        return result;
+    }
+}
+
 pub trait Any {
     type Item;
 

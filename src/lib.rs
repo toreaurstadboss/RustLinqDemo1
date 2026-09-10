@@ -1,5 +1,6 @@
 pub mod sequence_extensions;
 
+#[cfg(test)]
 #[derive(Debug, Clone)]
 struct User {
     id: i32,
@@ -26,12 +27,21 @@ fn sample_users() -> Vec<User> {
 
 #[cfg(test)]
 mod tests {
+    use super::sample_users;
     use super::sequence_extensions::{
         All, Any, ElementAtOrDefault, FirstOrDefault, GroupBy, LastOrDefault, SkipTakeOwned,
         TakeOwned, TakeSlice,
     };
+    use crate::sequence_extensions::{Range, RangeGenerator};
 
-    use super::sample_users;
+    #[test]
+    fn sample_users_returns_expected_ids() {
+        let users = sample_users();
+
+        let ids = users.iter().map(|user| user.id).collect::<Vec<_>>();
+
+        assert_eq!(ids, vec![1, 2, 3]);
+    }
 
     #[test]
     fn all_returns_false_when_one_item_does_not_match() {
@@ -100,4 +110,13 @@ mod tests {
         assert_eq!(grouped_users.get("Alice").map(Vec::len), Some(1));
         assert_eq!(grouped_users.get("Bob").map(Vec::len), Some(2));
     }
+
+    #[test]
+    fn range_returns_expected_count() {
+        let range = RangeGenerator::range(-5, 10);
+        let expected_nums = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4];
+
+        assert_eq!(range, expected_nums);
+    }
+
 }
