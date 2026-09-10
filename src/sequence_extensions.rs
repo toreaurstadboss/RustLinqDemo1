@@ -42,6 +42,26 @@ impl<T> All for [T] {
     }
 }
 
+/// Returns the element at position or default value. 
+pub trait ElementAtOrDefault {
+    type Item;
+
+    fn elementat_or_default(&self, index: &usize) -> Self::Item;
+}
+
+impl<T> ElementAtOrDefault for [T]
+where
+    T: Default + Clone,
+{
+    type Item = T;
+
+    fn elementat_or_default(&self, index: &usize) -> Self::Item {
+        self.get(*index).cloned().unwrap_or_default()
+    }
+}
+
+
+
 /// Returns the first item or the default value.
 pub trait FirstOrDefault {
     type Item;
@@ -150,3 +170,7 @@ impl<T> GroupBy for Vec<T> {
         self.into_iter().into_group_map_by(key_selector)
     }
 }
+
+
+
+
