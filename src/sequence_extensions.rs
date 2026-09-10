@@ -22,6 +22,22 @@ impl Range for RangeGenerator {
     }
 }
 
+pub trait Rev {
+    type Item;
+
+    fn rev(&self) -> Vec<Self::Item>;
+}
+
+impl<T> Rev for Vec<T>
+    where T : Clone { 
+
+    type Item = T;
+
+    fn rev(&self) -> Vec<T> {
+        self.iter().rev().cloned().collect()
+    }
+}
+
 pub trait Any {
     type Item;
 

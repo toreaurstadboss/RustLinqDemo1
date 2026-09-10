@@ -1,4 +1,5 @@
-use rustlinqdemo1::sequence_extensions::{All, Any, ElementAtOrDefault, FirstOrDefault, LastOrDefault, SkipTakeOwned, TakeOwned, TakeSlice};
+use rustlinqdemo1::sequence_extensions::{All, Any, ElementAtOrDefault, FirstOrDefault, LastOrDefault,
+     SkipTakeOwned, TakeOwned, TakeSlice};
 
 #[test]
 fn all_returns_false_when_one_item_does_not_match() {

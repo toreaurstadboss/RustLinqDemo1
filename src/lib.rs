@@ -30,7 +30,7 @@ mod tests {
     use super::sample_users;
     use super::sequence_extensions::{
         All, Any, ElementAtOrDefault, FirstOrDefault, GroupBy, LastOrDefault, SkipTakeOwned,
-        TakeOwned, TakeSlice,
+        TakeOwned, TakeSlice, Rev
     };
     use crate::sequence_extensions::{Range, RangeGenerator};
 
@@ -99,6 +99,13 @@ mod tests {
         let values = vec![1, 2, 3, 4, 5];
 
         assert_eq!(values.take_owned(4), vec![1, 2, 3, 4]);
+    }
+
+    #[test]
+    fn reverse_returns_expected_reversal() {
+        let values = vec![1, 2, 3, 4];
+
+        assert_eq!(values.rev(), vec![4, 3, 2, 1]);
     }
 
     #[test]
