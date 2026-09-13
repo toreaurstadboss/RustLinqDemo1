@@ -2,10 +2,13 @@ use std::collections::HashMap;
 
 use itertools::Itertools;
 
+/// Creates an owned sequence of consecutive `i32` values.
 pub trait RangeOwned {
+    /// Creates `count` values starting at `start`.
     fn range_owned(start: i32, count: u32) -> Vec<i32>;
 }
 
+/// Provides the range-generation entry point.
 pub struct RangeGenerator;
 
 impl RangeOwned for RangeGenerator {
@@ -19,9 +22,11 @@ impl RangeOwned for RangeGenerator {
     }
 }
 
+/// Provides an owned reverse-order copy of a sequence.
 pub trait ReverseOwned {
     type Item;
 
+    /// Returns the items in reverse order without changing the source vector.
     fn reverse_owned(&self) -> Vec<Self::Item>;
 }
 
@@ -36,6 +41,7 @@ where
     }
 }
 
+/// Provides a predicate that checks whether at least one item matches.
 pub trait Any {
     type Item;
 
@@ -56,6 +62,7 @@ impl<T> Any for [T] {
     }
 }
 
+/// Provides a predicate that checks whether every item matches.
 pub trait All {
     type Item;
 
@@ -76,10 +83,11 @@ impl<T> All for [T] {
     }
 }
 
-/// Returns the element at position or default value.
+/// Provides indexed lookup with a default value when the index is out of range.
 pub trait ElementAtOrDefault {
     type Item;
 
+    /// Returns the item at `index`, or `T::default()` when no item exists there.
     fn elementat_or_default(&self, index: usize) -> Self::Item;
 }
 
@@ -94,7 +102,7 @@ where
     }
 }
 
-/// Returns the first item or the default value.
+/// Provides first-item lookup with a default value for an empty sequence.
 pub trait FirstOrDefault {
     type Item;
 
@@ -113,7 +121,7 @@ where
     }
 }
 
-/// Returns the last item or the default value.
+/// Provides last-item lookup with a default value for an empty sequence.
 pub trait LastOrDefault {
     type Item;
 
@@ -133,6 +141,7 @@ where
 }
 
 /// Returns a borrowed prefix of a slice.
+/// Provides borrowed views over the beginning of a slice.
 pub trait TakeRef {
     type Item;
 
@@ -149,6 +158,7 @@ impl<T> TakeRef for [T] {
 }
 
 /// Returns an owned prefix of a vector.
+/// Provides owned prefixes by consuming a vector.
 pub trait TakeOwned {
     type Item;
 
@@ -165,6 +175,7 @@ impl<T> TakeOwned for Vec<T> {
     }
 }
 
+/// Provides owned subsequences by consuming a vector.
 pub trait SkipTakeOwned {
     type Item;
 
@@ -181,9 +192,11 @@ impl<T> SkipTakeOwned for Vec<T> {
     }
 }
 
+/// Groups items into owned vectors keyed by a selector result.
 pub trait GroupByOwned {
     type Item;
 
+    /// Consumes the vector and groups its items by `key_selector`.
     fn group_by_owned<F, K>(self, key_selector: F) -> HashMap<K, Vec<Self::Item>>
     where
         F: FnMut(&Self::Item) -> K,
