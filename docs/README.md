@@ -1,6 +1,6 @@
 # API Documentation
 
-The generated Rust API documentation is available in [doc/rustlinqdemo1/index.html](doc/rustlinqdemo1/index.html).
+The generated Rust API documentation is available in [doc/index.html](doc/index.html).
 
 Regenerate it from the repository root with:
 

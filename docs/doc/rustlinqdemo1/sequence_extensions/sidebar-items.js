@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["RangeGenerator"],"trait":["All","Any","ElementAtOrDefault","FirstOrDefault","GroupByOwned","LastOrDefault","RangeOwned","ReverseOwned","SkipTakeOwned","TakeOwned","TakeRef"]};
+window.SIDEBAR_ITEMS = {"struct":["RangeGenerator"],"trait":["All","Any","ElementAtOrDefault","FirstOrDefault","GroupByOwned","LastOrDefault","RangeOwned","ReverseOwned","SkipOwned","SkipTakeOwned","TakeOwned","TakeRef"]};
