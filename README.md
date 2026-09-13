@@ -1,6 +1,11 @@
 # rustlinqdemo1
 
-A small Rust demo project that shows a custom `first_or_default()` helper and is ready to run and debug from Visual Studio Code with CodeLLDB.
+A small Rust demo project that shows a collection of trait methods similar to a selected collection of C#'s LINQ library methods and is ready to run and debug from Visual Studio Code with CodeLLDB.
+
+The API docs are available here: 
+
+👉🏻 **[Rust Sequence Extensions Linq API Docs]**
+https://toreaurstadboss.github.io/RustLinqDemo1/docs/doc/rustlinqdemo1/sequence_extensions/index.html
 
 ## What you need
 
