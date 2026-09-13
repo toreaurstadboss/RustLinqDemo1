@@ -140,7 +140,7 @@ where
     }
 }
 
-/// Returns a borrowed prefix of a slice.
+/// Returns a borrowed start of a slice, defined by a given size of number of items to take
 /// Provides borrowed views over the beginning of a slice.
 pub trait TakeRef {
     type Item;
@@ -157,8 +157,8 @@ impl<T> TakeRef for [T] {
     }
 }
 
-/// Returns an owned prefix of a vector.
-/// Provides owned prefixes by consuming a vector.
+/// Returns an owned slice of the start of a vector.
+/// Provides owned start of the provided vector.
 pub trait TakeOwned {
     type Item;
 
@@ -172,6 +172,20 @@ impl<T> TakeOwned for Vec<T> {
     fn take_owned(self, n: usize) -> Vec<Self::Item> {
         let len = self.len();
         self.into_iter().take(n.min(len)).collect()
+    }
+}
+
+pub trait SkipOwned {
+    type Item;
+
+    fn skip_owned(self, n: usize) -> Vec<Self::Item>;
+}
+
+impl<T> SkipOwned for Vec<T> {
+    type Item = T;
+
+    fn skip_owned(self, n: usize) -> Vec<Self::Item> {
+        self.into_iter().skip(n).collect()
     }
 }
 

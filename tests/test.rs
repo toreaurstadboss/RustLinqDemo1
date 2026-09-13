@@ -1,5 +1,6 @@
 use rustlinqdemo1::sequence_extensions::{
-    All, Any, ElementAtOrDefault, FirstOrDefault, LastOrDefault, SkipTakeOwned, TakeOwned, TakeRef,
+    All, Any, ElementAtOrDefault, FirstOrDefault, LastOrDefault, SkipOwned, SkipTakeOwned,
+    TakeOwned, TakeRef,
 };
 
 #[test]
@@ -51,6 +52,12 @@ fn take_ref_returns_borrowed_prefix() {
     let values = vec![1, 2, 3, 4, 5];
 
     assert_eq!(values.take_ref(3), &[1, 2, 3]);
+}
+
+#[test]
+fn skip_owned_take_owned_chained_returns_expected() {
+    let values = vec![1, 2, 3, 4, 5, 6, 7];
+    assert_eq!(values.skip_owned(3).take_owned(3), vec![4, 5, 6]);
 }
 
 #[test]
