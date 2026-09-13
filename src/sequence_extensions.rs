@@ -175,6 +175,7 @@ impl<T> TakeOwned for Vec<T> {
     }
 }
 
+// Provides skipped slice by n items that returns the rest of the vector
 pub trait SkipOwned {
     type Item;
 

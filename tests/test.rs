@@ -56,7 +56,7 @@ fn take_ref_returns_borrowed_prefix() {
 
 #[test]
 fn skip_owned_take_owned_chained_returns_expected() {
-    let values = vec![1, 2, 3, 4, 5, 6, 7];
+    let values: Vec<i32> = vec![1, 2, 3, 4, 5, 6, 7];
     assert_eq!(values.skip_owned(3).take_owned(3), vec![4, 5, 6]);
 }
 
