@@ -1,34 +1,53 @@
-use rustlinqdemo1::sequence_extensions::{All, Any, ElementAtOrDefault, FirstOrDefault, GroupBy, LastOrDefault, SkipTakeOwned, TakeOwned, TakeSlice};
-
+use rustlinqdemo1::sequence_extensions::{
+    All, Any, ElementAtOrDefault, FirstOrDefault, GroupByOwned, LastOrDefault, RangeGenerator,
+    RangeOwned, ReverseOwned, SkipTakeOwned, TakeOwned, TakeRef,
+};
 
 fn main() {
     //println!("Hello, world!");
 
-    let v = vec![- 30, 10, 28, 32, 120];
+    let v = vec![-30, 10, 28, 32, 120];
 
     println!("Input vector: {:?}", v);
 
     let w = vec![-3, 7, 11, 12, 18, 23, 54, 63, 118];
 
-   let fourth_number = v.elementat_or_default(8usize);
-   println!("Fourth number of w is: {}", fourth_number);
+    let fourth_number = v.elementat_or_default(8usize);
+    println!("Fourth number of w is: {}", fourth_number);
 
-    let users = vec![ User { id: 1, name: "Alice".to_string()}, User { id : 2, name: "Bob".to_string() }, User { id: 3, name: "Bob".to_string()}];
+    let users = vec![
+        User {
+            id: 1,
+            name: "Alice".to_string(),
+        },
+        User {
+            id: 2,
+            name: "Bob".to_string(),
+        },
+        User {
+            id: 3,
+            name: "Bob".to_string(),
+        },
+    ];
 
-    for (key, group) in users.clone().group_by(|u|u.name.clone()){
+    for (key, group) in users.clone().group_by_owned(|u| u.name.clone()) {
         println!("Name: {}", key);
         println!("Users: {:#?}", group);
-       // println!("User ids: {:?}", group.iter().map(|u| u.id).collect::<Vec<_>>());
+        // println!("User ids: {:?}", group.iter().map(|u| u.id).collect::<Vec<_>>());
 
-
-       println!("User ids: {:?}", group.into_iter().map(|u|u.id).collect::<Vec<_>>());
+        println!(
+            "User ids: {:?}",
+            group.into_iter().map(|u| u.id).collect::<Vec<_>>()
+        );
     }
 
-
-    for (key, group) in &w.group_by(|x| x % 2 == 0) {
-         println!("Vector 'w' Key: {}, Group: {:?}", key, group.into_iter().collect::<Vec<_>>());
+    for (key, group) in &w.group_by_owned(|x| x % 2 == 0) {
+        println!(
+            "Vector 'w' Key: {}, Group: {:?}",
+            key,
+            group.into_iter().collect::<Vec<_>>()
+        );
     }
-
 
     let a = v.first_or_default();
     println!("The first item of vector v is: {}", a);
@@ -37,12 +56,15 @@ fn main() {
     println!("The last item of vector v is: {}", b);
 
     let c = v.any(|x| *x > 119);
-    println!("There is a number larger than number 119 in the vector v: {:?}", c);
+    println!(
+        "There is a number larger than number 119 in the vector v: {:?}",
+        c
+    );
 
     let d = v.all(|x| *x % 2 == 0);
     println!("The numbers in vector v are all even numbers: {:?}", d);
 
-    let e: &[i32] = v.take_n(3);
+    let e: &[i32] = v.take_ref(3);
     println!("The first 3 items of vector v are: {:?}", e);
 
     println!("Cloning the vector for next calls that takes ownership of (parts of) it");
@@ -52,11 +74,16 @@ fn main() {
 
     let g = v.clone().take_owned(4);
     println!("The first 4 items of vector v are {:?}", g);
-}
 
+    let reversed = v.reverse_owned();
+    println!("The reversed vector v is {:?}", reversed);
+
+    let generated = RangeGenerator::range_owned(1, 3);
+    println!("The generated range is {:?}", generated);
+}
 
 #[derive(Debug, Clone)]
 struct User {
     id: i32,
-    name: String
+    name: String,
 }

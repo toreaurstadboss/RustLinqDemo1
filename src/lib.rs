@@ -29,10 +29,10 @@ fn sample_users() -> Vec<User> {
 mod tests {
     use super::sample_users;
     use super::sequence_extensions::{
-        All, Any, ElementAtOrDefault, FirstOrDefault, GroupBy, LastOrDefault, SkipTakeOwned,
-        TakeOwned, TakeSlice, Rev
+        All, Any, ElementAtOrDefault, FirstOrDefault, GroupByOwned, LastOrDefault, RangeOwned,
+        ReverseOwned, SkipTakeOwned, TakeOwned, TakeRef,
     };
-    use crate::sequence_extensions::{Range, RangeGenerator};
+    use crate::sequence_extensions::RangeGenerator;
 
     #[test]
     fn sample_users_returns_expected_ids() {
@@ -88,10 +88,10 @@ mod tests {
     }
 
     #[test]
-    fn take_n_returns_borrowed_prefix() {
+    fn take_ref_returns_borrowed_prefix() {
         let values = vec![1, 2, 3, 4, 5];
 
-        assert_eq!(values.take_n(3), &[1, 2, 3]);
+        assert_eq!(values.take_ref(3), &[1, 2, 3]);
     }
 
     #[test]
@@ -105,13 +105,13 @@ mod tests {
     fn reverse_returns_expected_reversal() {
         let values = vec![1, 2, 3, 4];
 
-        assert_eq!(values.rev(), vec![4, 3, 2, 1]);
+        assert_eq!(values.reverse_owned(), vec![4, 3, 2, 1]);
     }
 
     #[test]
     fn groupby_returns_expected_count() {
         let users = sample_users();
-        let grouped_users = users.group_by(|user| user.name.clone());
+        let grouped_users = users.group_by_owned(|user| user.name.clone());
 
         assert_eq!(grouped_users.len(), 2);
         assert_eq!(grouped_users.get("Alice").map(Vec::len), Some(1));
@@ -120,7 +120,7 @@ mod tests {
 
     #[test]
     fn range_returns_expected_count() {
-        let range = RangeGenerator::range(-5, 10);
+        let range = RangeGenerator::range_owned(-5, 10);
         let expected_nums = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4];
 
         assert_eq!(range, expected_nums);
@@ -130,5 +130,4 @@ mod tests {
             println!("Number using default for range in Rust : {}", i);
         }
     }
-
 }

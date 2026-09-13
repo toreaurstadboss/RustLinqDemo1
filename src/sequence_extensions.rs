@@ -2,17 +2,14 @@ use std::collections::HashMap;
 
 use itertools::Itertools;
 
-
-pub trait Range {
-
-    fn range(start: i32, count: u32) -> Vec<i32>;
+pub trait RangeOwned {
+    fn range_owned(start: i32, count: u32) -> Vec<i32>;
 }
 
 pub struct RangeGenerator;
 
-impl Range for RangeGenerator {
-
-    fn range(start: i32, count: u32) -> Vec<i32>{
+impl RangeOwned for RangeGenerator {
+    fn range_owned(start: i32, count: u32) -> Vec<i32> {
         let mut result = Vec::new();
 
         for i in start..start + (count as i32) {
@@ -22,18 +19,19 @@ impl Range for RangeGenerator {
     }
 }
 
-pub trait Rev {
+pub trait ReverseOwned {
     type Item;
 
-    fn rev(&self) -> Vec<Self::Item>;
+    fn reverse_owned(&self) -> Vec<Self::Item>;
 }
 
-impl<T> Rev for Vec<T>
-    where T : Clone { 
-
+impl<T> ReverseOwned for Vec<T>
+where
+    T: Clone,
+{
     type Item = T;
 
-    fn rev(&self) -> Vec<T> {
+    fn reverse_owned(&self) -> Vec<T> {
         self.iter().rev().cloned().collect()
     }
 }
@@ -78,7 +76,7 @@ impl<T> All for [T] {
     }
 }
 
-/// Returns the element at position or default value. 
+/// Returns the element at position or default value.
 pub trait ElementAtOrDefault {
     type Item;
 
@@ -87,7 +85,7 @@ pub trait ElementAtOrDefault {
 
 impl<T> ElementAtOrDefault for [T]
 where
-    T: Default + Clone
+    T: Default + Clone,
 {
     type Item = T;
 
@@ -135,17 +133,17 @@ where
 }
 
 /// Returns a borrowed prefix of a slice.
-pub trait TakeSlice {
+pub trait TakeRef {
     type Item;
 
     /// Returns up to n items from the start of the slice.
-    fn take_n(&self, n: usize) -> &[Self::Item];
+    fn take_ref(&self, n: usize) -> &[Self::Item];
 }
 
-impl<T> TakeSlice for [T] {
+impl<T> TakeRef for [T] {
     type Item = T;
 
-    fn take_n(&self, n: usize) -> &[T] {
+    fn take_ref(&self, n: usize) -> &[T] {
         &self[..n.min(self.len())]
     }
 }
@@ -183,28 +181,23 @@ impl<T> SkipTakeOwned for Vec<T> {
     }
 }
 
-
-pub trait GroupBy {
+pub trait GroupByOwned {
     type Item;
 
-    fn group_by<F, K>(self, key_selector: F) -> HashMap<K, Vec<Self::Item>>
+    fn group_by_owned<F, K>(self, key_selector: F) -> HashMap<K, Vec<Self::Item>>
     where
         F: FnMut(&Self::Item) -> K,
         K: std::hash::Hash + Eq;
 }
 
-impl<T> GroupBy for Vec<T> {
-    type Item = T; 
+impl<T> GroupByOwned for Vec<T> {
+    type Item = T;
 
-    fn group_by<F, K>(self, key_selector: F) -> std::collections::HashMap<K, Vec<T>>
+    fn group_by_owned<F, K>(self, key_selector: F) -> std::collections::HashMap<K, Vec<T>>
     where
         F: FnMut(&T) -> K,
-        K : std::hash::Hash + Eq
+        K: std::hash::Hash + Eq,
     {
         self.into_iter().into_group_map_by(key_selector)
     }
 }
-
-
-
-

@@ -1,5 +1,6 @@
-use rustlinqdemo1::sequence_extensions::{All, Any, ElementAtOrDefault, FirstOrDefault, LastOrDefault,
-     SkipTakeOwned, TakeOwned, TakeSlice};
+use rustlinqdemo1::sequence_extensions::{
+    All, Any, ElementAtOrDefault, FirstOrDefault, LastOrDefault, SkipTakeOwned, TakeOwned, TakeRef,
+};
 
 #[test]
 fn all_returns_false_when_one_item_does_not_match() {
@@ -16,10 +17,10 @@ fn any_returns_true_when_one_item_matches() {
 }
 
 #[test]
-fn elementat_or_default_returns_fourth_item(){
+fn elementat_or_default_returns_fourth_item() {
     let values = vec![3, 5, 11, -3, 45];
-    
-    let fourth_number= values.elementat_or_default(3);
+
+    let fourth_number = values.elementat_or_default(3);
 
     assert_eq!(fourth_number, -3); // 0-index based
 }
@@ -46,10 +47,10 @@ fn skip_take_owned_returns_requested_range() {
 }
 
 #[test]
-fn take_n_returns_borrowed_prefix() {
+fn take_ref_returns_borrowed_prefix() {
     let values = vec![1, 2, 3, 4, 5];
 
-    assert_eq!(values.take_n(3), &[1, 2, 3]);
+    assert_eq!(values.take_ref(3), &[1, 2, 3]);
 }
 
 #[test]
