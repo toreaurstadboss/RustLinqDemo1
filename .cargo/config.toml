@@ -1,0 +1,2 @@
+[alias]
+docs = "doc --no-deps --target-dir docs"

@@ -1,1 +1,7 @@
 target/
+
+# Cargo metadata and build artifacts when using the `cargo docs` alias.
+docs/debug/
+docs/.rustc_info.json
+docs/.rustdoc_fingerprint.json
+docs/doc/.lock

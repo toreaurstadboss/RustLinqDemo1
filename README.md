@@ -52,3 +52,4 @@ The debug configuration is in [.vscode/launch.json](.vscode/launch.json).
 - `src/main.rs`: program entry point and demo code.
 - `Cargo.toml`: crate metadata and dependencies.
 - `.vscode/launch.json`: VS Code debug configuration.
+- `config.toml` : Alias do build the API documentation and copy docs to output folder _docs_ . Docs are opened by a web browser by opening file 
